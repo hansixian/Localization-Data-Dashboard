@@ -14,11 +14,14 @@ This contains everything you need to run your app locally.
 
 ## Deploy to GitHub Pages
 
-This repo is a Vite app, so GitHub Pages must publish the built `dist/` output, not the raw source files in the repository root.
+This repo is configured to support GitHub Pages deployment from the branch root.
 
-1. Push this repo to GitHub.
-2. In GitHub, open `Settings > Pages`.
-3. Set `Source` to `GitHub Actions`.
-4. Push to `main` or run the `Deploy GitHub Pages` workflow manually.
+1. Build the root deployment assets:
+   `npm run build:pages-root`
+2. Commit the updated files in `assets/` together with your code changes.
+3. Push to `main`.
+4. In GitHub, open `Settings > Pages`.
+5. Set `Source` to `Deploy from a branch`.
+6. Set the branch to `main` and the folder to `/(root)`.
 
-The workflow in [.github/workflows/deploy-pages.yml](.github/workflows/deploy-pages.yml) installs dependencies, runs `npm run build`, and deploys `dist/`.
+GitHub Pages will then serve the production bundle from the repository root instead of trying to load raw source files.
