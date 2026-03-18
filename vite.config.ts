@@ -1,43 +1,25 @@
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
-import {defineConfig} from 'vite';
-
-const sharedConfig = {
-  base: './',
-  plugins: [react(), tailwindcss()],
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, '.'),
-    },
-  },
-  server: {
-    hmr: process.env.DISABLE_HMR !== 'true',
-  },
-};
+import {defineConfig, loadEnv} from 'vite';
 
 export default defineConfig(({mode}) => {
-  if (mode === 'pages-root') {
-    return {
-      ...sharedConfig,
-      build: {
-        outDir: 'assets',
-        emptyOutDir: true,
-        cssCodeSplit: false,
-        lib: {
-          entry: path.resolve(__dirname, 'src/main.tsx'),
-          formats: ['es'],
-          fileName: () => 'app.js',
-        },
-        rollupOptions: {
-          output: {
-            assetFileNames: (assetInfo) =>
-              assetInfo.name?.endsWith('.css') ? 'app.css' : '[name][extname]',
-          },
-        },
+  const env = loadEnv(mode, '.', '');
+  return {
+    base: './',
+    plugins: [react(), tailwindcss()],
+    define: {
+      'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY),
+    },
+    resolve: {
+      alias: {
+        '@': path.resolve(__dirname, '.'),
       },
-    };
-  }
-
-  return sharedConfig;
+    },
+    server: {
+      // HMR is disabled in AI Studio via DISABLE_HMR env var.
+      // Do not modifyâfile watching is disabled to prevent flickering during agent edits.
+      hmr: process.env.DISABLE_HMR !== 'true',
+    },
+  };
 });

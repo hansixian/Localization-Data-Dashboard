@@ -1,6 +1,12 @@
-# Localization Data Dashboard
+<div align="center">
+<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+</div>
+
+# Run and deploy your AI Studio app
 
 This contains everything you need to run your app locally.
+
+View your app in AI Studio: https://ai.studio/apps/3500d521-89af-48aa-a7aa-d9bdcd15bf0b
 
 ## Run Locally
 
@@ -9,19 +15,17 @@ This contains everything you need to run your app locally.
 
 1. Install dependencies:
    `npm install`
-2. Run the app:
+2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
+3. Run the app:
    `npm run dev`
 
 ## Deploy to GitHub Pages
 
-This repo is configured to support GitHub Pages deployment from the branch root.
+This repo is a Vite app, so GitHub Pages must publish the built `dist/` output, not the raw source files in the repository root.
 
-1. Build the root deployment assets:
-   `npm run build:pages-root`
-2. Commit the updated files in `assets/` together with your code changes.
-3. Push to `main`.
-4. In GitHub, open `Settings > Pages`.
-5. Set `Source` to `Deploy from a branch`.
-6. Set the branch to `main` and the folder to `/(root)`.
+1. Push this repo to GitHub.
+2. In GitHub, open `Settings > Pages`.
+3. Set `Source` to `GitHub Actions`.
+4. Push to `main` or run the `Deploy GitHub Pages` workflow manually.
 
-GitHub Pages will then serve the production bundle from the repository root instead of trying to load raw source files.
+The workflow in [.github/workflows/deploy-pages.yml](.github/workflows/deploy-pages.yml) installs dependencies, runs `npm run build`, and deploys `dist/`.

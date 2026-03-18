@@ -3,26 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Localization Data Dashboard</title>
+    <title>My Google AI Studio App</title>
   </head>
   <body>
     <div id="root"></div>
-    <script type="module">
-      const isLocalDev =
-        location.hostname === 'localhost' ||
-        location.hostname === '127.0.0.1' ||
-        location.port === '3000';
-
-      if (isLocalDev) {
-        import('/src/main.tsx');
-      } else {
-        const stylesheet = document.createElement('link');
-        stylesheet.rel = 'stylesheet';
-        stylesheet.href = './assets/app.css';
-        document.head.appendChild(stylesheet);
-        const pagesEntry = './assets/app.js';
-        import(/* @vite-ignore */ pagesEntry);
-      }
-    </script>
+    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
+
